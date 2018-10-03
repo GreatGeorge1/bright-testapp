@@ -13,7 +13,7 @@
   <div class="container">
     <h1>Test app <span class="badge badge-secondary">New</span></h1>
     <div id="app" class="">
-      <textarea name="name" rows="5"  class="form-control" placeholder="Введите URLы, каждый с новой строки" v-model="textarea"></textarea><br>
+      <textarea name="name" rows="5" class="form-control" placeholder="Введите URLы, каждый с новой строки" v-model="textarea"></textarea><br>
       <button class="btn btn-primary" v-on:click="getInfo">Получить информацию</button>
       <table width="100%">
         <thead>
@@ -39,14 +39,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
   <script type="text/javascript">
     const regex = /<title>(.*?)<\/title>/gm;
 
     let app = new Vue({
       el: "#app",
-      data: function() {
-        return{
+      data: function () {
+        return {
           textarea: "",
           result: [],
           isLoading: false
@@ -77,31 +78,31 @@
         getInfo: function () {
           this.$data.result = new Array();
           let urls = this.$data.textarea.split("\n");
-          let preload={
+          let preload = {
             url: "load",
-            title:"load",
-            statusText:"load",
-            status:"load"
+            title: "load",
+            statusText: "load",
+            status: "load"
           };
           for (var i = 0; i < urls.length; i++) {
-            this.$data.result[i]=preload;
+            this.$data.result[i] = preload;
           }
 
           for (let i = 0; i < urls.length; i++) {
             console.log(urls[i]);
-            this.$data.isLoading=true;
+            this.$data.isLoading = true;
             this.$http.get(urls[i]).then(response => {
               let temp = response;
               temp.title = this.bodyTitle(response.bodyText);
               this.$data.result.pop();
               this.$data.result.unshift(temp);
-              this.$data.isLoading=false;
-            }).catch(err=>{
-              let temp={
+              this.$data.isLoading = false;
+            }).catch(err => {
+              let temp = {
                 url: urls[i],
-                statusText: "erorr",
-                status:"404",
-                title:""
+                statusText: "error",
+                status: "404",
+                title: ""
               }
               this.$data.result.pop();
               this.$data.result.unshift(temp);
