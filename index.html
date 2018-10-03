@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>some</title>
+  <style media="screen">
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Test app <span class="badge badge-secondary">New</span></h1>
+    <div id="app" class="">
+      <textarea name="name" rows="5"  class="form-control" placeholder="Введите URLы, каждый с новой строки" v-model="textarea"></textarea><br>
+      <button class="btn btn-primary" v-on:click="getInfo">Получить информацию</button>
+      <table width="100%">
+        <thead>
+          <tr>
+            <th>URL</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Response code</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="r in result">
+            <td>{{r.url | isExist}}</td>
+            <td>{{r.title | isExist}}</td>
+            <td>{{r.statusText | isExist}}</td>
+            <td>{{r.status | isExist}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script type="text/javascript">
+    const regex = /<title>(.*?)<\/title>/gm;
+
+    let app = new Vue({
+      el: "#app",
+      data: function() {
+        return{
+          textarea: "",
+          result: [],
+          isLoading: false
+        }
+      },
+      methods: {
+        // getInfo: function () {
+        //   this.$data.result = new Array();
+        //   let urls = this.$data.textarea.split("\n");
+        //   let promises=new Array();
+        //   let handler=function(response){
+        //       let temp = response;
+        //       temp.title = this.bodyTitle(response.bodyText);
+        //       this.$data.result.push(temp);
+        //   };
+        //   for (let i = 0; i < urls.length; i++) {
+        //     promises.push(this.$http.get(urls[i]));
+        //   }
+        //   Promise.all(promises).then(data=>{
+        //     console.log(data);
+        //     data.forEach(response=>{
+        //       let temp = response;
+        //       temp.title = this.bodyTitle(response.bodyText);
+        //       this.$data.result.push(temp);
+        //     });
+        //   });
+        // },
+        getInfo: function () {
+          this.$data.result = new Array();
+          let urls = this.$data.textarea.split("\n");
+          let preload={
+            url: "load",
+            title:"load",
+            statusText:"load",
+            status:"load"
+          };
+          for (var i = 0; i < urls.length; i++) {
+            this.$data.result[i]=preload;
+          }
+
+          for (let i = 0; i < urls.length; i++) {
+            console.log(urls[i]);
+            this.$data.isLoading=true;
+            this.$http.get(urls[i]).then(response => {
+              let temp = response;
+              temp.title = this.bodyTitle(response.bodyText);
+              this.$data.result.pop();
+              this.$data.result.unshift(temp);
+              this.$data.isLoading=false;
+            }).catch(err=>{
+              let temp={
+                url: urls[i],
+                statusText: "erorr",
+                status:"404",
+                title:""
+              }
+              this.$data.result.pop();
+              this.$data.result.unshift(temp);
+            });
+          }
+
+        },
+        bodyTitle: function (body) {
+          let m;
+          while ((m = regex.exec(body)) !== null) {
+            if (m.index === regex.lastIndex) {
+              regex.lastIndex++;
+            }
+
+            m.forEach((match, groupIndex) => {
+              console.log(`Found match, group ${groupIndex}: ${match}`);
+            });
+            if (!m) {
+              return ["", ""];
+            }
+            return m[1];
+          }
+        }
+      },
+      filters: {
+        isExist: function (value) {
+          if (!value) return '';
+          return value;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
