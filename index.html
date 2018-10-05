@@ -56,7 +56,6 @@
         return {
           textarea: "",
           result: [],
-          isLoading: false,
           progress: 0
         }
       },
@@ -65,7 +64,7 @@
           this.$data.result = new Array();
           this.$data.progress = 0;
           let urls = this.$data.textarea.split("\n");
-          if (!urls) {
+          if (urls[0] == '') {
             alert("Вы не ввели url!");
             return 0;
           }
@@ -82,14 +81,13 @@
 
           for (let i = 0; i < urls.length; i++) {
             console.log(urls[i]);
-            this.$data.isLoading = true;
             this.$http.get('https://cors-anywhere.herokuapp.com/' + urls[i]).then(response => {
               let temp = response;
               temp.title = this.bodyTitle(response.bodyText);
               temp.url = urls[i];
               this.$data.result.pop();
               this.$data.result.unshift(temp);
-              this.$data.isLoading = false;
+              this.$data.progress += prog;
             }).catch(err => {
               let temp = {
                 url: urls[i],
@@ -97,14 +95,14 @@
                 status: "404",
                 title: ""
               }
+              this.$data.progress += prog;
               this.$data.result.pop();
               this.$data.result.unshift(temp);
             });
-            this.$data.progress += prog;
           }
-          if (this.$data.progress < 100) {
-            this.$data.progress = 100;
-          }
+          // if (this.$data.progress < 100) {
+          //   this.$data.progress = 100;
+          // }
         },
         bodyTitle: function (body) {
           let m;
