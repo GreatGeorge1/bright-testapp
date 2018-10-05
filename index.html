@@ -34,6 +34,10 @@
           </tr>
         </tbody>
       </table>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" v-bind:style="'width:'+progress+'%'" v-bind:aria-valuenow="progress"
+          aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
     </div>
   </div>
 
@@ -52,13 +56,20 @@
         return {
           textarea: "",
           result: [],
-          isLoading: false
+          isLoading: false,
+          progress: 0
         }
       },
       methods: {
         getInfo: function () {
           this.$data.result = new Array();
+          this.$data.progress = 0;
           let urls = this.$data.textarea.split("\n");
+          if (!urls) {
+            alert("Вы не ввели url!");
+            return 0;
+          }
+          let prog = Math.ceil(100 / urls.length);
           let preload = {
             url: "load",
             title: "load",
@@ -89,8 +100,11 @@
               this.$data.result.pop();
               this.$data.result.unshift(temp);
             });
+            this.$data.progress += prog;
           }
-
+          if (this.$data.progress < 100) {
+            this.$data.progress = 100;
+          }
         },
         bodyTitle: function (body) {
           let m;
