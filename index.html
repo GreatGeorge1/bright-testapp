@@ -43,6 +43,7 @@
     crossorigin="anonymous">
   <script type="text/javascript">
     const regex = /<title>(.*?)<\/title>/gm;
+    const regex2 = /<title data-n-head=\\"true\\">(.*?)<\/title>/gm;
 
     let app = new Vue({
       el: "#app",
@@ -91,7 +92,7 @@
           for (let i = 0; i < urls.length; i++) {
             console.log(urls[i]);
             this.$data.isLoading = true;
-            this.$http.get(urls[i]).then(response => {
+            this.$http.get('https://cors-anywhere.herokuapp.com/' + urls[i]).then(response => {
               let temp = response;
               temp.title = this.bodyTitle(response.bodyText);
               this.$data.result.pop();
@@ -121,7 +122,18 @@
               console.log(`Found match, group ${groupIndex}: ${match}`);
             });
             if (!m) {
-              return ["", ""];
+              while ((m = regex2.exec(body)) !== null) {
+                if (m.index === regex.lastIndex) {
+                  regex.lastIndex++;
+                }
+                m.forEach((match, groupIndex) => {
+                  console.log(`Found match, group ${groupIndex}: ${match}`);
+                });
+              }
+              if (!m) {
+                return ["", ""]
+              }
+              return m[1];
             }
             return m[1];
           }
