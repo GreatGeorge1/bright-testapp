@@ -63,7 +63,7 @@
         getInfo: function () {
           this.$data.result = new Array();
           this.$data.progress = 0;
-          let urls = this.$data.textarea.split("\n");
+          let urls = this.$data.textarea.trim().split("\n");
           if (urls[0] == '') {
             alert("Вы не ввели url!");
             return 0;
