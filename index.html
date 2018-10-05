@@ -13,7 +13,8 @@
   <div class="container">
     <h1>Test app <span class="badge badge-secondary">New</span></h1>
     <div id="app" class="">
-      <textarea name="name" rows="5" class="form-control" placeholder="Введите URLы, каждый с новой строки" v-model="textarea"></textarea><br>
+      <textarea name="name" rows="5" class="form-control" placeholder="Введите URLы, каждый с новой строки. Например https://www.google.com.ua/?hl=ru&gws_rd=ssl"
+        v-model="textarea"></textarea><br>
       <button class="btn btn-primary" v-on:click="getInfo">Получить информацию</button>
       <table width="100%">
         <thead>
@@ -95,6 +96,7 @@
             this.$http.get('https://cors-anywhere.herokuapp.com/' + urls[i]).then(response => {
               let temp = response;
               temp.title = this.bodyTitle(response.bodyText);
+              temp.url = urls[i];
               this.$data.result.pop();
               this.$data.result.unshift(temp);
               this.$data.isLoading = false;
