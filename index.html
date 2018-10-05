@@ -56,27 +56,6 @@
         }
       },
       methods: {
-        // getInfo: function () {
-        //   this.$data.result = new Array();
-        //   let urls = this.$data.textarea.split("\n");
-        //   let promises=new Array();
-        //   let handler=function(response){
-        //       let temp = response;
-        //       temp.title = this.bodyTitle(response.bodyText);
-        //       this.$data.result.push(temp);
-        //   };
-        //   for (let i = 0; i < urls.length; i++) {
-        //     promises.push(this.$http.get(urls[i]));
-        //   }
-        //   Promise.all(promises).then(data=>{
-        //     console.log(data);
-        //     data.forEach(response=>{
-        //       let temp = response;
-        //       temp.title = this.bodyTitle(response.bodyText);
-        //       this.$data.result.push(temp);
-        //     });
-        //   });
-        // },
         getInfo: function () {
           this.$data.result = new Array();
           let urls = this.$data.textarea.split("\n");
