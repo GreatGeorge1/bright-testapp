@@ -50,6 +50,8 @@
     const regex = /<title>(.*?)<\/title>/gm;
     const regex2 = /<title data-n-head=\\"true\\">(.*?)<\/title>/gm;
 
+    const proxy = "https://cors-anywhere.herokuapp.com/";
+
     let app = new Vue({
       el: "#app",
       data: function () {
@@ -81,9 +83,11 @@
 
           for (let i = 0; i < urls.length; i++) {
             console.log(urls[i]);
-            this.$http.get('https://cors-anywhere.herokuapp.com/' + urls[i]).then(response => {
+            this.$http.get(proxy + urls[i]).then(response => {
               let temp = response;
-              temp.title = this.bodyTitle(response.bodyText);
+              this.bodyTitle(response.bodyText).then(data => {
+                temp.title = data;
+              });
               temp.url = urls[i];
               this.$data.result.pop();
               this.$data.result.unshift(temp);
@@ -100,11 +104,9 @@
               this.$data.result.unshift(temp);
             });
           }
-          // if (this.$data.progress < 100) {
-          //   this.$data.progress = 100;
-          // }
+
         },
-        bodyTitle: function (body) {
+        bodyTitle: async function (body) {
           let m;
           while ((m = regex.exec(body)) !== null) {
             if (m.index === regex.lastIndex) {
