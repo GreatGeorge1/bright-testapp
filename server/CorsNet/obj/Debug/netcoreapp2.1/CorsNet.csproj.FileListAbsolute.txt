@@ -1,0 +1,14 @@
+D:\Projects\CorsNet\CorsNet\bin\Debug\netcoreapp2.1\CorsNet.deps.json
+D:\Projects\CorsNet\CorsNet\bin\Debug\netcoreapp2.1\CorsNet.runtimeconfig.json
+D:\Projects\CorsNet\CorsNet\bin\Debug\netcoreapp2.1\CorsNet.runtimeconfig.dev.json
+D:\Projects\CorsNet\CorsNet\bin\Debug\netcoreapp2.1\CorsNet.dll
+D:\Projects\CorsNet\CorsNet\bin\Debug\netcoreapp2.1\CorsNet.pdb
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.csprojAssemblyReference.cache
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.csproj.CoreCompileInputs.cache
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.RazorAssemblyInfo.cache
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.RazorAssemblyInfo.cs
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.AssemblyInfoInputs.cache
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.AssemblyInfo.cs
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.RazorTargetAssemblyInfo.cache
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.dll
+D:\Projects\CorsNet\CorsNet\obj\Debug\netcoreapp2.1\CorsNet.pdb
